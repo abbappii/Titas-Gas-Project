@@ -1,0 +1,37 @@
+.users-list-container {
+    background-color: #efefef;
+    border-radius: 10px;
+    min-height: 60vh;
+    max-height: 80vh;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+}
+.users-list-container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+.users_list_action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100px;
+    margin: 0 auto;
+    font-size: 1.5rem
+}
+
+.users_list_action div:first-child a i{
+    color: #3e5265;
+}
+
+.users_list_action div:last-child  a i{
+    color: #de7e7e;
+}
+
+.users_list_action div:first-child:hover  a i{
+    color: #1746bd;
+}
+
+.users_list_action div:last-child:hover  a i{
+    color: #e80000;
+}

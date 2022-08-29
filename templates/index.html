@@ -1,0 +1,195 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% block title_block %}
+    Home
+{% endblock %}
+{% block style_header_block %}
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="{% static '/css/index_page.css' %}">
+{% endblock %}
+{% block body_block %}
+    <!--Custom style-->
+    <div class="overlay">
+        <div class="overlayDoor"></div>
+
+        <div class="overlayContent">
+            <div class="inner-image">
+                <img src="{% static '/images/titash-gas-logo.svg' %}" alt="" width="300px" height="300px">
+            </div>
+            <div class="loader">
+                <div class="inner"></div>
+            </div>
+            <div class="skip"><i class="fa-solid fa-circle-arrow-down"></i></div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid main-container hide" id="main-container">
+        {#    header cart #}
+        <div class="container card bg-dark text-white" id="card-container-slider"
+             style="height: 500px;margin: 0 auto;padding: 0;border:1px solid rgba(255, 255, 255, 0.0);">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="{% static '/images/slider/slider (1).jpg' %}" alt=""></div>
+                    <div class="swiper-slide"><img src="{% static '/images/slider/slider (2).jpg' %}" alt=""></div>
+                    {#                    <div class="swiper-slide"><img src="{% static '/images/slider/slider (3).jpg' %}" alt=""></div>#}
+                    {#                    <div class="swiper-slide"><img src="{% static '/images/logo_MRdJ7lK.jpeg' %}" alt=""></div>#}
+                    {#                    <div class="swiper-slide"><img src="{% static '/images/logo_MRdJ7lK.jpeg' %}" alt=""></div>#}
+                    {#                    <div class="swiper-slide"><img src="{% static '/images/logo_MRdJ7lK.jpeg' %}" alt=""></div>#}
+                </div>
+                <div id="card-image-overlay" class="hide" style="width: 100%;background: red;">
+                    <div class="card-img-overlay">
+                    <h5 class="card-title">তিতাস গ্যাস ট্রান্সমিশন অ্যান্ড ডিস্ট্রিবিউশন কোম্পানি লিমিটেড
+                        (টিজিটিডিসিএল)</h5>
+                    <p class="card-text">১৯৬২ সালে ব্রাহ্মণবাড়িয়ায় তিতাস নদীর তীরে বিরাট গ্যাস ক্ষেত্র আবিষ্কৃত হওয়ার
+                        সাথে সাথে বাংলাদেশে প্রাকৃতিক গ্যাস ব্যবহারে এক নতুন দিগন্তের সূচনা হয় এবং ১৯৬৪ সালের ২১ নভেম্বর
+                        তিতাস গ্যাস ট্রান্সমিসন এন্ড ডিস্ট্রিবিউশন কোম্পানী লিমিটেড জন্মলাভ করেছে। তৎকালীন সরকারি
+                        প্রতিষ্ঠান শিল্প উন্নয়ন সংস্থা কর্তৃক ১৪″ব্যাস সম্পন্ন ৫৮ মাইল দীর্ঘ তিতাস-ডেমরা সঞ্চালন
+                        পাইপলাইন নির্মাণের পর ১৯৬৮ সালের ২৮ এপ্রিল সিদ্ধিরগঞ্জ তাপ বিদ্যুৎ কেন্দ্রে গ্যাস সরবরাহের
+                        মাধ্যমে কোম্পানী বাণিজ্যিক কার্যক্রম শুরু করে। একটি প্রগতিশীল জাতীয় প্রতিষ্ঠান হিসেবে তিতাস
+                        গ্যাস তার সেবার মাধ্যমে জনগণের আস্থাভাজন হবার গৌরব অর্জন করেছে।</p>
+                    <p class="card-text">প্রধান নির্বাহী :	প্রকৌ. মো. হারুনুর রশিদ মোল্লাহ্</p>
+                </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+            </div>
+
+
+        </div>
+
+
+        {#    Cart section     #}
+        <div class="container services-pane" style="margin: 10px auto">
+            <h5 class="text-center service-header">Services</h5>
+            <div class="row row-cols-1 row-cols-md-3 row-cols-sm-1 g-4">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card">
+                        <img src="{% static '/images/complain.webp' %}" class="card-img" alt="..."
+                             style="object-fit: cover">
+                        <div class="card-body">
+                            <a href="https://www.titasgas.org.bd/Pages/অনলাইন-বিল-পেমেন্ট/32/" target="_blank"><img
+                                    src="{% static '/images/general complain.png' %}" class="card-body-logo" alt="..."></a>
+                            <h5 class="card-title">সাধারন অভিযোগ</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card">
+                        <img src="{% static '/images/call-center.jpg' %}" class="card-img" alt="..."
+                             style="object-fit: cover">
+                        <div class="card-body">
+                            <a href="https://www.titasgas.org.bd/Pages/গ্রাহক-সেবা-কল-সেন্টার--১৬৪৯৬/386/"
+                               target="_blank"><img src="{% static '/images/call_center_icon.png' %}"
+                                                    class="card-body-logo" alt="..."></a>
+                            <h5 class="card-title">গ্রাহক সেবা কল সেন্টার ১৬৪৯৬</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 ">
+                    <div class="card">
+                        <img src="{% static '/images/emargency_service.jpg' %}" class="card-img" alt="..."
+                             style="object-fit: cover">
+                        <div class="card-body">
+                            <a href="https://www.titasgas.org.bd/Pages/জরুরী-সেবা/95/" target="_blank"><img
+                                    src="{% static '/images/24-Emergency-Service-icon.png' %}" class="card-body-logo"
+                                    alt="..."></a>
+                            <h5 class="card-title">জরুরী সেবা</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 ">
+                    <div class="card">
+                        <img src="{% static '/images/bill-pay.jpg' %}" class="card-img" alt="..."
+                             style="object-fit: cover">
+                        <div class="card-body">
+                            <a href="https://www.titasgas.org.bd/Pages/অনলাইন-বিল-পেমেন্ট/32/" target="_blank"><img
+                                    src="{% static '/images/Online-Bill-Pay.png' %}" class="card-body-logo"
+                                    alt="..."></a>
+                            <h5 class="card-title">অনলাইন বিল পেমেন্ট</h5>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block sub_navbar %}
+    <div class="container footer-bar">
+        <ul>
+            <li><a target="_blank" href="https://www.titasgas.org.bd/Pages/এক-নজরে-তিতাস/2/">এক নজরে তিতাস</a></li>
+            <li><a target="_blank" href="https://www.titasgas.org.bd/Pages/সচেতনতা/122/">সচেতনতা</a></li>
+            <li><a target="_blank" href="https://www.titasgas.org.bd/Pages/গ্যালারি/73/">গ্যালারি</a></li>
+            <li><a target="_blank" href="https://www.titasgas.org.bd/Pages/জোন-অফিসসমুহ/96/">জোন অফিসসমুহ</a></li>
+            <li><a target="_blank" href="https://www.titasgas.org.bd/Pages/এফএকিউ/42/">এফএকিউ</a></li>
+            <li><a target="_blank" href="https://www.titasgas.org.bd/Pages/নীতিমালা/128/">নীতিমালা</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block js_block %}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    {#Loader page#}
+    <script>
+        $(document).ready(function () {
+            // Users can skip the loading process if they want.
+            $('.skip').click(function () {
+                $('.overlay').addClass('loaded');
+            })
+
+            // Will wait for everything on the page to load.
+            $(window).bind('loaded', function () {
+                $('.overlay').addClass('loaded');
+                setTimeout(function () {
+                    $('.overlay').css({'display': 'none'});
+                }, 2000)
+            });
+
+            // Will remove overlay after 1min for users cannnot load properly.
+            setTimeout(function () {
+                $('.overlay').addClass('loaded');
+                $('#main-container').removeClass('hide');
+            }, 5000);
+
+
+        })
+    </script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            pagination: {
+                el: ".swiper-pagination",
+                dynamicBullets: true,
+            },
+            initialSlide: 1,
+            autoplay: {
+                delay: 6000,
+                disableOnInteraction: false,
+                reverseDirection: false,
+            }
+        });
+
+
+
+        $('#card-container-slider').on('mouseover',function () {
+            $('#card-image-overlay').removeClass('hide');
+
+
+        })
+        $('#card-container-slider').on('mouseout',function () {
+            $('#card-image-overlay').addClass('hide');
+
+
+        })
+    </script>
+{% endblock %}

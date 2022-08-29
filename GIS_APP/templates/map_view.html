@@ -1,0 +1,982 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block style_header_block %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+            integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+            crossorigin=""></script>
+
+    <!-- Load Esri Leaflet Vector from CDN -->
+    <script src="https://unpkg.com/esri-leaflet-vector@3.1.2/dist/esri-leaflet-vector.js"
+            integrity="sha512-SnA/TobYvMdLwGPv48bsO+9ROk7kqKu/tI9TelKQsDe+KZL0TUUWml56TZIMGcpHcVctpaU6Mz4bvboUQDuU3w=="
+            crossorigin=""></script>
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>#}
+
+    <!--============GPS Location ============-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <!--Geo script-->
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- Plot js  -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script type="text/javascript" src="{% static '/gis/js/dist/leaflet.ajax.js' %}"></script>
+    <script type="text/javascript" src="{% static '/gis/js/dist/leaflet.label.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static '/gis/js/leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static '/gis/css/map_index.css' %}">
+{% endblock %}
+{% block search_block %}
+    <style>
+        .form-controller-pane {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    </style>
+    <div class="form-controller-pane">
+        <form class="d-flex me-3">
+            <select class="form-select" aria-label="Default select example" id="dia_search">
+                <option value="" selected>Select Dia</option>
+                <option value=".75">Dia - 0.75</option>
+                <option value="1">Dia - 1</option>
+                <option value="2">Dia - 2</option>
+                <option value="3">Dia - 3</option>
+                <option value="4">Dia - 4</option>
+                <option value="6">Dia - 6</option>
+                <option value="8">Dia - 8</option>
+                <option value="10">Dia - 10</option>
+                <option value="12">Dia - 12</option>
+                <option value="16">Dia - 16</option>
+            </select>
+
+        </form>
+        <form class="d-flex me-3">
+            <input class="form-control me-2" type="search" placeholder="Search by pressure" aria-label="Search"
+                   id="search_value">
+
+        </form>
+        <form class="d-flex me-3">
+            <input class="form-control me-2" type="search" placeholder="Search by Road" aria-label="Search"
+                   id="search_value_road">
+
+        </form>
+
+    </div>
+
+
+
+{% endblock %}
+{% block nav_item %}
+    <li class="nav-item">
+        <a class="nav-link" id="gas_line_btn" href="#">Line Info</a>
+    </li>
+{% endblock %}
+{% block body_block %}
+
+    <!-- custom map style -->
+    <style>
+        #map {
+            height: 92vh;
+        }
+
+        .bold-text {
+            font-size: 1.3rem;
+            color: rebeccapurple;
+            font-weight: bold
+        }
+
+        .hover-effect {
+            display: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            min-width: 200px;
+            min-height: 100px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: #efebeb;
+            z-index: 10001;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .hover-effect p {
+            margin-bottom: 0;
+        }
+
+
+        /* MULTI SPINNER */
+
+        .mesh-loader {
+            position: fixed;
+            overflow: hidden;
+            height: inherit;
+            width: inherit;
+            z-index: 10055;
+        }
+
+        .mesh-loader .circle {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            background: #f44336;
+            border-radius: 50%;
+            margin: -15px;
+            -webkit-animation: mesh 3s ease-in-out infinite -1.5s;
+            animation: mesh 3s ease-in-out infinite -1.5s;
+        }
+
+        .mesh-loader > div .circle:last-child {
+            -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+        }
+
+        .mesh-loader > div {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+        }
+
+        .mesh-loader > div:last-child {
+            -webkit-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+
+        @keyframes mesh {
+            0% {
+                -webkit-transform-origin: 50% -100%;
+                transform-origin: 50% -100%;
+                -webkit-transform: rotate(0);
+                transform: rotate(0);
+            }
+            50% {
+                -webkit-transform-origin: 50% -100%;
+                transform-origin: 50% -100%;
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+            50.1% {
+                -webkit-transform-origin: 50% 200%;
+                transform-origin: 50% 200%;
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform-origin: 50% 200%;
+                transform-origin: 50% 200%;
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+    {#    loader #}
+    <div>
+        <div class="mesh-loader">
+            <div class="set-one">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+            <div class="set-two">
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid" style="opacity: 0">
+        <div id="information_pane" class="info-pane display-none">
+            <h2 class="text-center text-capitalize text-primary">Gas Line Info</h2>
+            {#            <canvas id="myChart" style="width:100%;height: 500px"></canvas>#}
+
+            <table class="table">
+                <thead>
+                <tr class="text-center">
+                    <th scope="col">Dia(Inch)</th>
+                    <th scope="col">Line Count</th>
+                    <th scope="col">Length(M)</th>
+                </tr>
+                </thead>
+                <tbody id="gas_line_dia_info" class="text-center">
+
+                {#                <tr data-bs-toggle="collapse" href="#collapseExample" aria-expanded="false">#}
+                {#                    <th scope="row">2"</th>#}
+                {#                    <td>12'</td>#}
+                {#                    <td>2.3Km</td>#}
+                {#                    <td>150PSI</td>#}
+                {#                </tr>#}
+
+                {#                <tr class="collapse" id="collapseExample">#}
+                {#                    <th scope="row">2"</th>#}
+                {#                    <td>12'</td>#}
+                {#                    <td>2.3Km</td>#}
+                {#                    <td>150PSI</td>#}
+                {#                </tr>#}
+
+
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pieChartModal"
+                    style="margin: 0 auto;display: flex; align-items: center; justify-items: flex-end">Pie Chart
+            </button>
+        </div>
+        <div id="map"></div>
+        <div class="point-center" style="display: flex;flex-direction: column;gap: 20px" >
+            <i class="fa-solid fa-location-dot" id="current-location"></i>
+            <i class="fa-solid fa-location-crosshairs" id="point-center"></i>
+        </div>
+
+
+    </div>
+
+    <div class="modal fade" id="pieChartModal" tabindex="-1" aria-labelledby="pieChartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="myPlot" style="width:100%;max-width:700px"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="pieChartModal" tabindex="-1" aria-labelledby="pieChartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="myPlot" style="width:100%;max-width:700px"></div>
+
+            </div>
+        </div>
+    </div>
+    <!--=============Modal section=============-->
+    <div class="modal fade" id="gas_line_info" tabindex="-1" aria-labelledby="gas_line_info" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div id="gas_line_info_pane">
+                    <h2 class="text-center text-capitalize text-primary">Gas Line Info</h2>
+
+                    <table class="table">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col">Dia(Inch)</th>
+                            <th scope="col">Depth(m)</th>
+                            <th scope="col">Pressure(psig)</th>
+                            <th scope="col">Length(m)</th>
+                        </tr>
+                        </thead>
+                        <tbody id="gas_table_body" class="text-center">
+                        <!--data will be loaded from js-->
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="pipeline_info" tabindex="-1" aria-labelledby="pipeline_info" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div id="pipeline_info_pane">
+                    <h2 class="text-center text-capitalize text-primary">Pipeline Information</h2>
+
+                    <table class="table">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col">Dia(Inch)</th>
+                            <th scope="col">Depth(m)</th>
+                            <th scope="col">Pressure(psig)</th>
+                            <th scope="col">Length(m)</th>
+                        </tr>
+                        </thead>
+                        <tbody id="line_info_table_body" class="text-center">
+                        <!--data will be loaded from js-->
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="riser_info" tabindex="-1" aria-labelledby="riser_info" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div id="pipeline_info_pane">
+                    <h2 class="text-center text-capitalize text-primary">Riser Information</h2>
+                    <div id="riser_info_table">
+
+                    </div>
+                    {#                    <table class="table">#}
+                    {#                        <thead id="riser_info_table_head">#}
+                    {#                        <tr class="text-center">#}
+                    {#                            <th scope="col">Customer Id</th>#}
+                    {#                            <th scope="col">Dia</th>#}
+                    {#                            <th scope="col">Connection Load</th>#}
+                    {#                            <th scope="col">Burner</th>#}
+                    {#                            <th scope="col">Pressure</th>#}
+                    {#                            <th scope="col">Pressure Overall</th>#}
+                    {#                        </tr>#}
+                    {#                        </thead>#}
+                    {#                        <tbody id="riser_info_table_body" class="text-center">#}
+                    {#                        <!--data will be loaded from js-->#}
+                    {##}
+                    {#                        </tbody>#}
+                    {#                    </table>#}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="hover-effect" id="hover-effect">
+        <p><span>Dia : </span><span class="bold-text dia"></span></p>
+        <p><span>Pressure : </span><span class="bold-text pressure"></span></p>
+    </div>
+
+    <div class="gas-line-legend" id="gas-line-legend">
+        <ul>
+            <li style="color: #669d09!important;padding: 0;margin: 0">
+                <span>Dia 0.75</span>
+            </li>
+            <li style="color: #FF0000FF!important;">
+                <span>Dia 1</span>
+            </li>
+            <li style="color: #E316C9FF!important;">
+                <span>Dia 2</span>
+            </li>
+            <li style="color: #10e3d2!important;">
+                <span>Dia 3</span>
+            </li>
+            <li style="color: #0836a8!important;">
+                <span>Dia 4</span>
+            </li>
+            <li style="color: #97e510!important;">
+                <span>Dia 6</span>
+            </li>
+            <li style="color: #f1c209!important;">
+                <span>Dia 8</span>
+            </li>
+            <li style="color: #d7626e!important;">
+                <span>Dia 10</span>
+            </li>
+            <li style="color: #36ff00!important;">
+                <span>Dia 12</span>
+            </li>
+            <li style="color: #146900!important;">
+                <span>Dia 16</span>
+            </li>
+
+        </ul>
+    </div>
+
+    {#    <div id="gas_line">#}
+    {#        <a class="btn btn-primary" id="gas_line_btn" style="position: absolute;bottom: 0;left: 0;z-index: 1000">Gas</a>#}
+    {##}
+    {#    </div>#}
+{% endblock %}
+
+{% block js_block %}
+
+    <!--custome script-->
+    <script src="{% static '/gis/js/gis_js.js' %}"></script>
+    <script src="{% static '/gis/js/barchart.js' %}"></script>
+    <script src="{% static '/gis/js/gisSidebar.js' %}"></script>
+    <script src="{% static '/gis/js/pipelineInfo.js' %}"></script>
+    <script src="{% static '/gis/js/riserInfo.js' %}"></script>
+    {% csrf_token %}
+    <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    </script>
+
+
+    {#  loader  annimation #}
+
+
+    <script>
+        // zoom controller placement style change
+        document.querySelector('.leaflet-left').classList.add('zoom-controller');
+        document.querySelector('.leaflet-left').classList.remove('leaflet-left');
+        document.querySelector('.leaflet-right').style.top = '80px';
+        let brsLabel;
+
+        const hoverPane = document.getElementById('hover-effect');
+        // style layer design implemented
+        var stylelayer = {
+            dia16: {
+                color: "#146900",
+                opacity: 1,
+                fillcolor: "#146900",
+                fillOpacity: 0.1,
+                weight: 6.5
+            },
+            dia12: {
+                color: "#36ff00",
+                opacity: 1,
+                fillcolor: "#36ff00",
+                fillOpacity: 0.1,
+                weight: 6
+            },
+            dia10: {
+                color: "#d7626e",
+                opacity: 1,
+                fillcolor: "#D7626EFF",
+                fillOpacity: 0.1,
+                weight: 5.5
+            },
+            dia8: {
+                color: "#f1c209",
+                opacity: 1,
+                fillcolor: "#f1c209",
+                fillOpacity: 0.1,
+                weight: 5
+            },
+            dia6: {
+                color: "#97e510",
+                opacity: 1,
+                fillcolor: "#97e510",
+                fillOpacity: 0.1,
+                weight: 5
+            },
+            dia4: {
+                color: "#0836a8",
+                opacity: 1,
+                fillcolor: "#0836a8",
+                fillOpacity: 0.1,
+                weight: 4
+            },
+            dia3: {
+                color: "#10e3d2",
+                opacity: 1,
+                fillcolor: "#10e3d2",
+                fillOpacity: 0.1,
+                weight: 3.5
+            },
+            dia2: {
+                color: "#E316C9FF",
+                opacity: 1,
+                fillcolor: "#E316C9FF",
+                fillOpacity: 0.1,
+                weight: 3
+            },
+            dia75: {
+                color: "#669d09",
+                opacity: 1,
+                fillcolor: "#669d09",
+                fillOpacity: 0.1,
+                weight: 2.5
+            },
+            dia1: {
+                color: "#FF0000FF",
+                opacity: 1,
+                fillcolor: "#FF0000FF",
+                fillOpacity: 0.1,
+                weight: 2
+            },
+
+
+        }
+        let GasLineInfo = new L.GeoJSON.AJAX("{% url 'gis_app:gas_line_info_api' %}", {
+            onEachFeature: function (feature, layer) {
+                colorProperty(feature, layer);
+
+                layer.on('mouseover', function () {
+                    this.setStyle({
+                        color: 'red',
+                        fillColor: 'red',
+                        weight: '.5rem'
+                    });
+                    HoverEffectFunction(feature)
+
+
+                })
+                layer.on('mouseout', function () {
+                    hoverPane.style.display = 'none';
+                    colorProperty(feature, layer);
+                });
+                layer.on('click', function () {
+                    pipeLineInfo(feature.properties.pk)
+                });
+
+            }
+
+
+        }).addTo(map);
+        let plotInfo = new L.GeoJSON.AJAX("{% url 'gis_app:plot_info_api' %}", {
+
+
+            onEachFeature: function (feature, layer) {
+                layer.setStyle({
+                    weight: 3,
+                    fillOpacity: 0,
+                });
+
+
+                layer.on('mouseover', function () {
+                    brsLabel = new L.marker(layer.getBounds().getCenter(), {
+                        icon: L.divIcon({
+                            className: 'label',
+                            html: feature.properties.plot,
+                            iconSize: [0, -140],
+                            iconAnchor: [10, -10],
+                        })
+                    }).addTo(map);
+                    this.setStyle({
+                        'fillColor': '#aaaaf5',
+                        fillOpacity: .9,
+                    });
+                })
+                layer.on('mouseout', function () {
+                    map.removeLayer(brsLabel);
+                    this.setStyle({
+                        'fillColor': '#aaaaf5',
+                        fillOpacity: 0,
+                    });
+                });
+
+
+            }
+
+
+        });
+        let RoadInfo = new L.GeoJSON.AJAX("{% url 'gis_app:road_shape_info_api' %}", {
+
+
+            onEachFeature: function (feature, layer) {
+
+
+                layer.setStyle({
+                    color: '#c7c5c5',
+                    weight: 3,
+                    fillOpacity: 1,
+                });
+
+                layer.on('mouseover', function () {
+                    brsLabel = new L.marker(layer.getBounds().getCenter(), {
+                        icon: L.divIcon({
+                            className: 'road_label',
+                            html: feature.properties.road_no,
+                            iconSize: [0, -4],
+                            iconAnchor: [10, -10],
+                        })
+                    }).addTo(map);
+
+                    this.setStyle({
+                        fillOpacity: 0,
+                        fillColor: '#c7c5c5',
+                    });
+                })
+                layer.on('mouseout', function () {
+                    this.setStyle({
+                        fillColor: '#c7c5c5',
+                        color: '#c7c5c5',
+                        weight: 3,
+                        fillOpacity: 1,
+
+                    });
+                    map.removeLayer(brsLabel);
+                })
+            }
+
+
+        });
+        let FootpathInfo = new L.GeoJSON.AJAX("{% url 'gis_app:footpath_api' %}", {
+
+
+            onEachFeature: function (feature, layer) {
+                layer.setStyle({
+                    weight: 3,
+                    fillOpacity: 0,
+                });
+
+
+                layer.on('mouseover', function () {
+                    brsLabel = new L.marker(layer.getBounds().getCenter(), {
+
+                        icon: L.divIcon({
+                            className: 'label',
+                            html: feature.properties.shape_area,
+                            iconSize: [0, -140],
+                            iconAnchor: [10, -10],
+                        })
+
+                    }).addTo(map);
+                    this.setStyle({
+                        'fillColor': '#aaaaf5',
+                        fillOpacity: .9,
+                    });
+                })
+                layer.on('mouseout', function () {
+                    map.removeLayer(brsLabel);
+                    this.setStyle({
+                        'fillColor': '#aaaaf5',
+                        fillOpacity: 0,
+                    });
+                });
+            }
+
+
+        });
+        let RiserInfo = new L.GeoJSON.AJAX("{% url 'gis_app:riser_info_api' %}", {
+            /*onEachFeature: function (feature, layer) {
+                colorProperty(feature, layer);
+
+                layer.on('mouseover', function () {
+                    this.setStyle({
+                        color: 'red',
+                        fillColor: 'red',
+                        weight: '.5rem'
+                    });
+                    hoverPane.querySelector('.dia').innerHTML = `${feature.properties.dia}`;
+                    hoverPane.querySelector('.pressure').innerHTML = `${feature.properties.pressure}`;
+                    hoverPane.style.display = 'block';
+
+
+                })
+                layer.on('mouseout', function () {
+                    hoverPane.style.display = 'none';
+                    colorProperty(feature, layer);
+                });
+                layer.on('click', function () {
+                    //console.log(feature.properties)
+
+                    pipeLineInfo(feature.properties.pk)
+                });
+
+            }*/
+            pointToLayer: function (gp, latlng) {
+                var marker = L.marker(latlng, {icon: RiserIcon});
+                return marker;
+            },
+            onEachFeature: function (feature, layer) {
+                layer.on('click', function () {
+                    console.log(feature)
+                    RiserInformation(feature);
+                });
+
+            }
+
+
+        });
+        let ValvepitInfo = new L.GeoJSON.AJAX("{% url 'gis_app:valvepit_info_api' %}", {
+
+            pointToLayer: function (gp, latlng) {
+                //console.log(latlng)
+                var marker = L.marker(latlng, {icon: controlValIcon});
+                return marker;
+            },
+            onEachFeature: function (feature, layer) {
+                //console.log(feature)
+            }
+
+
+        });
+        let EndCapInfo = new L.GeoJSON.AJAX("{% url 'gis_app:end_capinfo_api' %}", {
+            pointToLayer: function (gp, latlng) {
+                marker = L.marker(latlng, {icon: EndCapIcon});
+                return marker;
+            },
+            onEachFeature: function (feature, layer) {
+            }
+
+
+        });
+        let ReducerInfo = new L.GeoJSON.AJAX("{% url 'gis_app:reducer_info_api' %}", {
+
+
+            pointToLayer: function (gp, latlng) {
+                marker = L.marker(latlng, {icon: ReducerIcon});
+                return marker;
+            },
+            onEachFeature: function (feature, layer) {
+            }
+
+
+        });
+
+
+        //=================Search Function =================
+        let filteredValue, RoadFilteredValue;
+        const SearchInput = document.getElementById('dia_search');
+        const SearchPressure = document.getElementById('search_value');
+        const SearchRoad = document.getElementById('search_value_road');
+        let hostAddress = window.location.origin;
+
+
+        function SearchFunction(gasDia) {
+            try {
+                if (map.hasLayer(filteredValue)) {
+                    filteredValue.remove();
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+            if (SearchPressure.value || SearchInput.value) {
+                console.log(hostAddress)
+                filteredValue = new L.GeoJSON.AJAX(`${hostAddress}/api/gas_line_info/?search=${gasDia}`, {
+                    filter: PressureFilter,
+                    onEachFeature: function (feature, layer) {
+                        let center = layer.getBounds().getCenter()
+                        map.setView([center.lat, center.lng], 15)
+                        colorProperty(feature, layer);
+                        layer.setStyle({
+                            weight: 6
+                        });
+                        layer.on('mouseover', function () {
+                            this.setStyle({
+                                color: 'red',
+                                fillColor: 'red',
+                            })
+                        })
+                        layer.on('mouseout', function () {
+                            colorProperty(feature, layer);
+                            layer.setStyle({
+                                weight: 6
+                            });
+                            hoverPane.style.display = 'none';
+                        });
+
+                        layer.on('mouseover', function () {
+                            this.setStyle({
+                                color: 'red',
+                                fillColor: 'red',
+                                weight: '.5rem'
+                            });
+                            HoverEffectFunction(feature)
+
+                        })
+                        layer.on('click', function () {
+                            pipeLineInfo(feature.properties.pk)
+                        });
+
+                    }
+
+
+                }).addTo(map);
+            } else {
+                GasLineInfo.addTo(map);
+            }
+
+
+        }
+
+
+        function SearchRoadFunction(road) {
+            try {
+                if (map.hasLayer(RoadFilteredValue)) {
+                    RoadFilteredValue.remove();
+                }
+            } catch (e) {
+                console.log(e)
+            }
+            if (SearchRoad.value) {
+                RoadFilteredValue = new L.GeoJSON.AJAX(`${hostAddress}/api/road_shape/?search=${road}`, {
+                    {#filter: RoadFilter,#}
+                    onEachFeature: function (feature, layer) {
+                        let center = layer.getBounds().getCenter()
+                        map.setView([center.lat, center.lng], 15)
+                        layer.setStyle({
+                            weight: 6,
+                            color: '#c7c5c5',
+                            fillOpacity: 1,
+                        });
+
+                        layer.on('mouseover', function () {
+                            brsLabel = new L.marker(layer.getBounds().getCenter(), {
+                                icon: L.divIcon({
+                                    className: 'road_label',
+                                    html: feature.properties.road_no,
+                                    iconSize: [0, -4],
+                                    iconAnchor: [10, -10],
+                                })
+                            }).addTo(map);
+
+                            this.setStyle({
+                                fillOpacity: 0,
+                                color: '#ef7474',
+                            });
+                        })
+                        layer.on('mouseout', function () {
+                            this.setStyle({
+                                fillColor: '#c7c5c5',
+                                color: '#c7c5c5',
+                                weight: 6,
+                                fillOpacity: 1,
+
+                            });
+                            map.removeLayer(brsLabel);
+                        })
+
+                    }
+
+
+                }).addTo(map);
+            } else {
+                RoadFilteredValue.remove();
+            }
+
+        }
+
+        function colorProperty(feature, layer) {
+            if (feature.properties.dia == '16') {
+                layer.setStyle(stylelayer.dia16);
+            } else if (feature.properties.dia == '12') {
+                layer.setStyle(stylelayer.dia12);
+            } else if (feature.properties.dia == '10') {
+                layer.setStyle(stylelayer.dia10);
+            } else if (feature.properties.dia == '8') {
+                layer.setStyle(stylelayer.dia8);
+            } else if (feature.properties.dia == '6') {
+                layer.setStyle(stylelayer.dia6);
+            } else if (feature.properties.dia == '4') {
+                layer.setStyle(stylelayer.dia2);
+            } else if (feature.properties.dia == '3') {
+                layer.setStyle(stylelayer.dia3);
+            } else if (feature.properties.dia == '2') {
+                layer.setStyle(stylelayer.dia2);
+            } else if (feature.properties.dia == '1') {
+                layer.setStyle(stylelayer.dia1);
+            } else {
+                layer.setStyle(stylelayer.dia75);
+            }
+        }
+
+        $("#dia_search,#search_value").on("input", function () {
+
+            map.removeLayer(plotInfo);
+            map.removeLayer(RoadInfo);
+            map.removeLayer(ValvepitInfo);
+            map.removeLayer(GasLineInfo);
+            map.removeLayer(EndCapInfo);
+            map.removeLayer(ReducerInfo);
+            SearchFunction(SearchInput.value);
+
+
+        });
+        let PressureFilter = function (feature) {
+            if (SearchPressure.value !== '') {
+                //        if (feature.properties.dia == SearchInput.value && (feature.properties.pressure == SearchPressure.value || feature.properties.len == SearchPressure.value)) return true
+                //    } else if (SearchInput.value !== '' && SearchPressure.value === '') {
+                if (feature.properties.pressure == SearchPressure.value) return true
+            } else {
+                return true
+            }
+        }
+
+
+        $("#search_value_road").on('input', function () {
+            if (SearchRoad.value == '') {
+                map.removeLayer(RoadFilteredValue);
+            } else {
+                map.removeLayer(plotInfo);
+                map.removeLayer(RoadInfo);
+                map.removeLayer(ValvepitInfo);
+                map.removeLayer(GasLineInfo);
+                map.removeLayer(EndCapInfo);
+                map.removeLayer(ReducerInfo);
+            }
+
+
+            SearchRoadFunction(SearchRoad.value);
+        });
+
+
+        //=================Layer controller=================
+        let grouped = {
+            "Open Street": openStreetMap,
+            "Google Streets": googleStreets,
+            "Google satellite": googleSat,
+            "Transparent Map": transparentMap,
+        }
+
+        let groupedOverlays = {
+            'Plot': plotInfo,
+            'Road': RoadInfo,
+            'Gas Line ': GasLineInfo,
+            'Footpath ': FootpathInfo,
+            'Valvepit': ValvepitInfo,
+            'Riser': RiserInfo,
+            'End Cap': EndCapInfo,
+            'Reducer': ReducerInfo,
+        };
+
+        L.control.layers(grouped, groupedOverlays).addTo(map);
+
+        $('.leaflet-control-layers').on('click', function () {
+            if (map.hasLayer(GasLineInfo)) {
+                document.getElementById('gas-line-legend').style.display = 'block';
+            } else {
+                document.getElementById('gas-line-legend').style.display = 'none';
+            }
+        });
+
+
+        //Helper function
+        function HoverEffectFunction(feature) {
+            hoverPane.querySelector('.dia').innerHTML = `${feature.properties.dia}(inch)`;
+            hoverPane.querySelector('.pressure').innerHTML = `${feature.properties.pressure}(psig)`;
+            hoverPane.style.display = 'block';
+        }
+
+        {#L.Control.GroupedLayers(grouped, groupedOverlays).addTo(map);#}
+
+        $('#search_value_road,#search_value').on('keypress', function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+    <script>
+        function validate() {
+            try {
+                if (map.hasLayer('GasLineInfo')) {
+                    return true
+                } else {
+                    return false
+                }
+            } catch (e) {
+                return false
+            }
+
+
+        }
+
+        function hello() {
+
+            if (validate) {
+                $('.container-fluid').css('opacity', 1);
+                $('.mesh-loader').css('display', 'none');
+
+            } else {
+                hello();
+            }
+        }
+
+
+        window.onload = function () {
+            $('.container-fluid').css('opacity', 1);
+            hello();
+
+        }
+
+
+    </script>
+{% endblock %}
