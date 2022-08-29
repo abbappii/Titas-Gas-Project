@@ -1,0 +1,149 @@
+{% extends "base_template.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    Profile
+{% endblock %}
+{% block body_block %}
+
+
+
+    <style>
+        body {
+            background-color: #ddd !important;
+        }
+
+        form input {
+            padding: 10px;
+        }
+
+        .profile-pane {
+            display: flex;
+            flex-direction: row;
+            margin: 100px auto;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+
+
+        }
+
+        .profile-pane :first-child {
+            width: 70%;
+            margin: 0 auto;
+            box-sizing: content-box;
+            padding: 3px;
+
+        }
+
+        .profile-pane :first-child img {
+            display: flex;
+            justify-content: space-between;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            border-radius: 50%;
+        }
+
+        .profile-pane :last-child {
+            width: 100%;
+        }
+
+        .profile-pane :first-child .profile-email {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        @media screen and (max-width: 1200px) {
+
+            #image-update {
+                width: 100px;
+                position: relative;
+                bottom: -1rem !important;
+            }
+
+        }
+    </style>
+    {% if message %}
+        <div class="container"><p class="text-success">Password has been changed successfully</p></div>
+    {% endif %}
+    <div class="container profile-pane">
+        <div>
+            {% if image_update %}
+                <h3 class="text-center text-dark">Profile Picture Update</h3>
+                <div class="profile-image" style="text-align: center;">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form|crispy }}
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit" id="image-update"
+                                style="width: 100px;position: relative; bottom: -1rem">Upload
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="profile-image">
+                    {% if user.profile_pic.url == '/media/default.jpg' or user.profile_pic.url == '/media/users/default.jpeg' %}
+                        <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 6rem;color: #a9a8a8"></i>
+                    {% else %}
+                        {% if user.profile_pic %}
+                            <img src="{{ user.profile_pic.url }}" alt="logo">
+                        {% else %}
+                            <i class="fa fa-user-circle-o" aria-hidden="true"
+                               style="font-size: 6rem;color: #a9a8a8"></i>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+                <div class="profile-email align-content-center" style="width: 50%; margin: 0 auto; padding-top: 20px;">
+                    <a href="{% url 'auth_app:profile_pic_update' %}" class="btn btn-primary">Edit Profile Picture</a>
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {% if profile_update %}
+                <div class="container mt-3 mb-3">
+                    <h3 class="text-dark text-center">Profile Update</h3>
+                    <div class="container">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button class="btn btn-primary" type="submit"
+                                    style="width: 100px;position: relative; bottom: -1rem">Upload
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <table class="table table-striped table-bordered" style="width: 100%;text-align: center">
+                    <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>{{ user.full_name }}</th>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <th>{{ user.phone_number }}</th>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <th>{{ user.email }}</th>
+                    </tr>
+                    <tr>
+                        <th>DOB</th>
+                        <th>{{ user.birthDate }}</th>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <th>{{ user.gender }}</th>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="profile-email align-content-center">
+                    <a href="{% url 'auth_app:profile_update' %}" class="btn btn-primary"
+                       style="width: 150px; padding: 5px 10px; margin:20px 0">Edit Profile</a>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base_template.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title_block %}
+    Registration
+{% endblock %}
+{% block body_block %}
+    <div class="container p-5" style="background-color: #fdfbfb ">
+    <h3 class="text-capitalize text-center p-4">New user Registration</h3>
+        <form method="POST">
+            {% if error_msg %}
+                <p class="alert-danger p-3 rounded-3 text-center">{{ error_msg }}</p>
+            {% endif %}
+            {% if success_msg %}
+                <p class="alert-success p-3 rounded-3 text-center">{{ success_msg }}</p>
+            {% endif %}
+            {{ form|crispy }}
+            {% csrf_token %}
+            <input type="submit" value="Sign Up" class="btn btn-primary p-2 my-2 fa-align-center">
+        </form>
+    </div>
+
+{% endblock %}

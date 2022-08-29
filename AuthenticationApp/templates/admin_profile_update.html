@@ -1,0 +1,22 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block body_block %}
+    <style>
+        .form-group{
+            padding: 5px;
+        }
+        .form-group:nth-child(5), .form-group:nth-child(6), .form-group:nth-child(7) {
+            padding: 10px 5px;
+        }
+    </style>
+    <div class="container my-5 bg-secondary p-5" style="border-radius: 10px">
+        <h1 class="text-center text-warning">Update User</h1>
+        <form action="" method="POST">
+            {{ update_profile|crispy }}
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="Update">
+        </form>
+    </div>
+{% endblock %}
