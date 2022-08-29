@@ -87,32 +87,30 @@ def UserRegisterView(request):
 
                     if request.user.is_superuser:
                         user.is_active = True
-                        user.is_verified = True
                         user.save()
-                        # enc_user = f'{settings.ENC_KEY},{user.pk}'
-                        # subject = "User account activation"
-                        # email_template_name = "registration_verification.txt"
-                        # domain = get_current_site(request).domain
-                        # c = {
-                        #     "email": user.email,
-                        #     'domain': domain,
-                        #     'site_name': 'Website',
-                        #     "uid": urlsafe_base64_encode(force_bytes(enc_user)),
-                        #     "user": user,
-                        #     'temp_pass': request.POST.get('password1'),
-                        #     'protocol': 'http',
-                        # }
-                        # email = render_to_string(email_template_name, c)
-                        # try:
-                        #     data = {'email_body': email, 'to_email': user.email,
-                        #             'email_subject': subject}
+                        enc_user = f'{settings.ENC_KEY},{user.pk}'
+                        subject = "User account activation"
+                        email_template_name = "registration_verification.txt"
+                        domain = get_current_site(request).domain
+                        c = {
+                            "email": user.email,
+                            'domain': domain,
+                            'site_name': 'Website',
+                            "uid": urlsafe_base64_encode(force_bytes(enc_user)),
+                            "user": user,
+                            'temp_pass': request.POST.get('password1'),
+                            'protocol': 'http',
+                        }
+                        email = render_to_string(email_template_name, c)
+                        try:
+                            data = {'email_body': email, 'to_email': user.email,
+                                    'email_subject': subject}
 
-                        #     email_send.Util.send_email(data)
-                        # except:
-                        #     pass
+                            email_send.Util.send_email(data)
+                        except:
+                            pass
                     else:
                         user.active_request = True
-                        user.is_verified = True
                         user.save()
                         success_msg = 'Account created'
 
@@ -150,18 +148,16 @@ def LoginView(request):
         username, password = request.POST.get('username'), request.POST.get('password')
         check_user = auth_model.User.objects.filter(email=username).first()
         if check_user:
-            # if check_user.email == 'gmzulkar@gmail.com' or check_user.email == 'tasinnaeem@gmail.com' or check_user.email == 'alifsanim10@gmail.com' or check_user.email == 'admin@gmail.com':
-            #     user = authenticate(username=username, password=password)
-            #     if user:
-            #         login(request, user)
-            #         return HttpResponseRedirect(reverse('index'))
-            #     else:
-            #         return render(request, 'login.html', context={'error': 'User name or password incorrect'})
+            if check_user.email == 'gmzulkar@gmail.com' or check_user.email == 'tasinnaeem@gmail.com' or check_user.email == 'alifsanim10@gmail.com' or check_user.email == 'admin@gmail.com':
+                user = authenticate(username=username, password=password)
+                if user:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('index'))
+                else:
+                    return render(request, 'login.html', context={'error': 'User name or password incorrect'})
             if check_user.is_active:
                 if check_user.is_verified:
                     user = authenticate(username=username, password=password)
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('index'))
                     if user:
                         # if user.email == 'gmzulkar@gmail.com' or user.email == 'tasinnaeem@gmail.com':
                         #     login(request, user)
@@ -231,79 +227,79 @@ def LoginView(request):
     return render(request, 'login.html', context)
 
 
-# def OTP_Verification(request, uuid):
-#     error = ''
-#     if request.method == 'POST':
-#         otp = request.POST.get('otp')
+def OTP_Verification(request, uuid):
+    error = ''
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
 
-#         try:
-#             # urlsafe_base64_decode() decodes to bytestring
-#             enc_uid = urlsafe_base64_decode(uuid).decode()
-#             uid = urlsafe_base64_decode(enc_uid).decode()
-#             dec_date = uid.split('-')
-#             sec_key = dec_date[0]
-#             user_pk = dec_date[-1]
-#             if sec_key == settings.ENC_KEY:
-#                 user = UserModel._default_manager.get(pk=user_pk)
-#             else:
-#                 raise ValidationError
+        try:
+            # urlsafe_base64_decode() decodes to bytestring
+            enc_uid = urlsafe_base64_decode(uuid).decode()
+            uid = urlsafe_base64_decode(enc_uid).decode()
+            dec_date = uid.split('-')
+            sec_key = dec_date[0]
+            user_pk = dec_date[-1]
+            if sec_key == settings.ENC_KEY:
+                user = UserModel._default_manager.get(pk=user_pk)
+            else:
+                raise ValidationError
 
-#         except (
-#                 TypeError,
-#                 ValueError,
-#                 OverflowError,
-#                 UserModel.DoesNotExist,
-#                 ValidationError,
-#         ):
-#             user = None
-#         if user:
-#             if user.otp == otp:
-#                 login(request, user)
-#                 return HttpResponseRedirect(reverse('index'))
-#             else:
-#                 return render(request, 'otp_verify.html', context={'error': 'Wrong OTP.', 'hash': uuid})
-#     return render(request, 'otp_verify.html', context={'hash': uuid})
+        except (
+                TypeError,
+                ValueError,
+                OverflowError,
+                UserModel.DoesNotExist,
+                ValidationError,
+        ):
+            user = None
+        if user:
+            if user.otp == otp:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return render(request, 'otp_verify.html', context={'error': 'Wrong OTP.', 'hash': uuid})
+    return render(request, 'otp_verify.html', context={'hash': uuid})
 
 
-# def OTP_Resend(request, hash):
-#     try:
-#         # urlsafe_base64_decode() decodes to bytestring
-#         enc_uid = urlsafe_base64_decode(hash).decode()
-#         uid = urlsafe_base64_decode(enc_uid).decode()
-#         dec_date = uid.split('-')
-#         sec_key = dec_date[0]
-#         user_pk = dec_date[-1]
-#         if sec_key == settings.ENC_KEY:
-#             user = UserModel._default_manager.get(pk=user_pk)
-#         else:
-#             raise ValidationError
-#     except (
-#             TypeError,
-#             ValueError,
-#             OverflowError,
-#             UserModel.DoesNotExist,
-#             ValidationError,
-#     ):
-#         user = None
+def OTP_Resend(request, hash):
+    try:
+        # urlsafe_base64_decode() decodes to bytestring
+        enc_uid = urlsafe_base64_decode(hash).decode()
+        uid = urlsafe_base64_decode(enc_uid).decode()
+        dec_date = uid.split('-')
+        sec_key = dec_date[0]
+        user_pk = dec_date[-1]
+        if sec_key == settings.ENC_KEY:
+            user = UserModel._default_manager.get(pk=user_pk)
+        else:
+            raise ValidationError
+    except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            UserModel.DoesNotExist,
+            ValidationError,
+    ):
+        user = None
 
-#     if user:
-#         user.otp = ''
-#         user.save()
-#         if user.is_active:
-#             otp = random.randint(100000, 999999)
-#             user.otp = otp
-#             user.save()
-#             subject = "Resend OTP Verification"
-#             email_body = f"Your OTP : {otp} for two-factor authentication.\n" \
-#                          f"Thank you."
-#             try:
-#                 data = {'email_body': email_body, 'to_email': user.email,
-#                         'email_subject': subject}
+    if user:
+        user.otp = ''
+        user.save()
+        if user.is_active:
+            otp = random.randint(100000, 999999)
+            user.otp = otp
+            user.save()
+            subject = "Resend OTP Verification"
+            email_body = f"Your OTP : {otp} for two-factor authentication.\n" \
+                         f"Thank you."
+            try:
+                data = {'email_body': email_body, 'to_email': user.email,
+                        'email_subject': subject}
 
-#                 email_send.Util.send_email(data)
-#             except:
-#                 pass
-#             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+                email_send.Util.send_email(data)
+            except:
+                pass
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 class AccountActivationListView(generics.ListAPIView):
@@ -379,13 +375,13 @@ def LogOutView(request):
     return HttpResponseRedirect(reverse('auth_app:login'))
 
 
-# @login_required(login_url='geo_app:login')
+@login_required(login_url='geo_app:login')
 def profileDashboardView(request):
-    # user = auth_model.User.objects.get(id=request.user.id)
-    return render(request, 'profile_dashboard.html')
+    user = auth_model.User.objects.get(id=request.user.id)
+    return render(request, 'profile_dashboard.html', context={'user': user})
 
 
-# @login_required(login_url='auth_app:login')
+@login_required(login_url='auth_app:login')
 def profilePicUpdateView(request):
     user = auth_model.User.objects.get(id=request.user.id)
     form = auth_form.ImageUpdloadForm(instance=user)
@@ -399,7 +395,7 @@ def profilePicUpdateView(request):
     return render(request, 'profile_dashboard.html', context={'image_update': True, 'form': form})
 
 
-# @login_required(login_url='auth_app:login')
+@login_required(login_url='auth_app:login')
 def profileUpdateView(request):
     user = auth_model.User.objects.get(id=request.user.id)
     form = auth_form.ProfileUpdateForm(instance=user)
@@ -413,7 +409,7 @@ def profileUpdateView(request):
     return render(request, 'profile_dashboard.html', context={'profile_update': True, 'form': form})
 
 
-# @login_required(login_url='auth_app:login')
+@login_required(login_url='auth_app:login')
 def UserListTemplateView(request):
     if request.user.is_superuser:
         return render(request, 'users_list.html', context={})
@@ -447,7 +443,7 @@ class UserListView(generics.ListAPIView):
         return queryset.order_by('id')
 
 
-# @login_required(login_url='auth_app:login')
+@login_required(login_url='auth_app:login')
 def UserProfileUpdateAdminView(request, user_id):
     if request.user.is_superuser:
         user = auth_model.User.objects.get(id=user_id)
