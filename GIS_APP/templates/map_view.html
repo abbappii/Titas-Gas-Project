@@ -786,9 +786,10 @@
             } catch (e) {
                 console.log(e)
             }
+
             if (SearchRoad.value) {
                 RoadFilteredValue = new L.GeoJSON.AJAX(`${hostAddress}/api/road_shape/?search=${road}`, {
-                    {#filter: RoadFilter,#}
+                    filter: RoadFilter,
                     onEachFeature: function (feature, layer) {
                         let center = layer.getBounds().getCenter()
                         map.setView([center.lat, center.lng], 15)
@@ -935,7 +936,7 @@
             hoverPane.style.display = 'block';
         }
 
-        {#L.Control.GroupedLayers(grouped, groupedOverlays).addTo(map);#}
+        {L.Control.GroupedLayers(grouped, groupedOverlays).addTo(map)}
 
         $('#search_value_road,#search_value').on('keypress', function (e) {
             if (e.keyCode == 13) {
