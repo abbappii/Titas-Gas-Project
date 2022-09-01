@@ -40,3 +40,5 @@ class ReducerModel(admin.ModelAdmin):
 
 
 admin.site.register(gis_model.RiserShapeModel)
+
+admin.site.register(gis_model.FootPathShapeModel)
