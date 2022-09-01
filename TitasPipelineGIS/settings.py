@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     # Gis config
     'django.contrib.gis',
     # libraries
+    'leaflet',
     'rest_framework',
     'django_resized',
     'phonenumber_field',
