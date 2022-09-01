@@ -1,6 +1,6 @@
 from django.contrib import admin
 from GIS_APP import models as gis_model
-
+from leaflet.admin import LeafletGeoAdmin 
 
 # Register your models here.
 
@@ -38,5 +38,8 @@ class EndCapModel(admin.ModelAdmin):
 class ReducerModel(admin.ModelAdmin):
     list_display = ('id', 'geom')
 
+class RiseShapeAdmin(LeafletGeoAdmin):
+    pass
+admin.site.register(gis_model.RiserShapeModel,RiseShapeAdmin)
 
-admin.site.register(gis_model.RiserShapeModel)
+admin.site.register(gis_model.FootPathShapeModel)
