@@ -151,6 +151,7 @@ footpath_mapping = {
 
 loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Plot/'))
 loc_shape_road = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Road/'))
+loc_shape_gas = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/GasLine/'))
 
 
 def run(verbose=True):
@@ -161,6 +162,12 @@ def run(verbose=True):
 
 def run_road(verbose=True):
     lm = LayerMapping(gis_model.RoadShapeModel, loc_shape_road, roadshapemodel_mapping, transform=False,
+                      encoding='iso-8859-1')
+    # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+def runGasLine(verbose=True):
+    lm = LayerMapping(gis_model.GasLineShapeModel, loc_shape_gas, gaslineshapemodel_mapping, transform=False,
                       encoding='iso-8859-1')
     # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
