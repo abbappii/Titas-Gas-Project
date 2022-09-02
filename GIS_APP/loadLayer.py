@@ -150,10 +150,17 @@ footpath_mapping = {
 # loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/plotShape/riser/19_06_22/'))
 
 loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Plot/'))
+loc_shape_road = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Road/'))
 
 
 def run(verbose=True):
     lm = LayerMapping(gis_model.PlotShapeModel, loc_shape, plot_mapping, transform=False,
+                      encoding='iso-8859-1')
+    # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+def run_road(verbose=True):
+    lm = LayerMapping(gis_model.RoadShapeModel, loc_shape_road, roadshapemodel_mapping, transform=False,
                       encoding='iso-8859-1')
     # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
