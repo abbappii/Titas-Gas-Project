@@ -4,15 +4,16 @@ from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
 
-@admin.register(gis_model.PlotShapeModel)
-class PlotShapeModel(admin.ModelAdmin):
-    list_display = ('id', 'geom', 'plot')
+# @admin.register(gis_model.PlotShapeModel)
+# class PlotShapeModel(admin.ModelAdmin):
+#     list_display = ('id', 'geom', 'plot')
+
+admin.site.register(gis_model.PlotShapeModel,LeafletGeoAdmin) 
 
 
 @admin.register(gis_model.RoadShapeModel)
 class RoadShapeModel(admin.ModelAdmin):
     list_display = ('id', 'road_no', 'geom')
-
 
 @admin.register(gis_model.GasLineShapeModel)
 class GasLineShapeModel(admin.ModelAdmin):
