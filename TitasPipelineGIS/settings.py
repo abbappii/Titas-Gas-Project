@@ -140,6 +140,8 @@ WSGI_APPLICATION = 'TitasPipelineGIS.wsgi.application'
 #         'PORT': '',
 #     }
 # }
+
+# last one 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -150,6 +152,19 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'Geoproject',
+#         'USER': 'Geoprojectuser',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 
 # DATABASES = {
 #     'default': {

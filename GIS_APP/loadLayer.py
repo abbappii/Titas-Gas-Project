@@ -151,6 +151,7 @@ footpath_mapping = {
 
 loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Plot/'))
 
+
 def run(verbose=True):
     lm = LayerMapping(gis_model.PlotShapeModel, loc_shape, plot_mapping, transform=False,
                       encoding='iso-8859-1')
