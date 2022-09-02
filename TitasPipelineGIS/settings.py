@@ -142,16 +142,16 @@ WSGI_APPLICATION = 'TitasPipelineGIS.wsgi.application'
 # }
 
 # last one 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mygeoproject',
-        'USER': 'mygeoprojectuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'mygeoproject',
+#         'USER': 'mygeoprojectuser',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 # DATABASES = {
@@ -176,6 +176,20 @@ DATABASES = {
 #         'PORT': '5432'
 #     }
 # }
+
+
+# clean one 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'mygproject',
+        'USER': 'mygprojectuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
