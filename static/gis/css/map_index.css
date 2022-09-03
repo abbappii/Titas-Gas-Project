@@ -38,6 +38,11 @@
     height: 90vh;
     overflow: scroll;
     z-index: 1005;
+
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background: white;
 }
 
 #information_pane::-webkit-scrollbar {
