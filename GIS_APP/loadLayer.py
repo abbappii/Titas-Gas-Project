@@ -201,3 +201,10 @@ def run_endcap(verbose=True):
     lm = LayerMapping(gis_model.EndCapModel, loc_shape_endcap, endcapmodel_mapping, transform=False,
                       encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
+
+
+loc_shape_reducer = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Reducer/'))
+def run_reducer(verbose=True):
+    lm = LayerMapping(gis_model.ReducerModel, loc_shape_reducer, reducermodel_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
