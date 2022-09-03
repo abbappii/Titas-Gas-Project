@@ -147,7 +147,6 @@ footpath_mapping = {
 
 # # loc_shape = os.path.abspath('E:\Pranto\Storage\SHAPEFILE')
 # loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/SHAPEFILE/CL_RS/'))
-# loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/plotShape/riser/19_06_22/'))
 
 loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Plot/'))
 loc_shape_road = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Road/'))
@@ -157,17 +156,55 @@ loc_shape_gas = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFil
 def run(verbose=True):
     lm = LayerMapping(gis_model.PlotShapeModel, loc_shape, plot_mapping, transform=False,
                       encoding='iso-8859-1')
-    # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
 
 def run_road(verbose=True):
     lm = LayerMapping(gis_model.RoadShapeModel, loc_shape_road, roadshapemodel_mapping, transform=False,
                       encoding='iso-8859-1')
-    # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose )
 
 def runGasLine(verbose=True):
     lm = LayerMapping(gis_model.GasLineShapeModel, loc_shape_gas, gaslineshapemodel_mapping, transform=False,
                       encoding='iso-8859-1')
-    # lm = LayerMapping(geo_model.RsShapeFieldModel, loc_shape, gis_mapping_rs, transform=False, encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+
+
+loc_shape_foot = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/FootPath/'))
+def run_foot(verbose=True):
+    lm = LayerMapping(gis_model.FootPathShapeModel, loc_shape_foot, footpath_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+loc_shape_riser = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Riser/'))
+def run_riser(verbose=True):
+    lm = LayerMapping(gis_model.RiserShapeModel, loc_shape_riser, raiser_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+
+loc_shape_val = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Valvepit/'))
+def run_val(verbose=True):
+    lm = LayerMapping(gis_model.ValvePitShapeModel, loc_shape_val, valvepit_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+loc_shape_riserS = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/plotShape/riser/19_06_22/'))
+def run_riserS(verbose=True):
+    lm = LayerMapping(gis_model.RiserShapeModel, loc_shape_riserS, raiser_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+
+loc_shape_endcap = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/EndCap/'))
+def run_endcap(verbose=True):
+    lm = LayerMapping(gis_model.EndCapModel, loc_shape_endcap, endcapmodel_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+
+loc_shape_reducer = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Reducer/'))
+def run_reducer(verbose=True):
+    lm = LayerMapping(gis_model.ReducerModel, loc_shape_reducer, reducermodel_mapping, transform=False,
+                      encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
