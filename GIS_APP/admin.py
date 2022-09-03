@@ -43,4 +43,4 @@ class RiseShapeAdmin(LeafletGeoAdmin):
     pass
 admin.site.register(gis_model.RiserShapeModel,RiseShapeAdmin)
 
-admin.site.register(gis_model.FootPathShapeModel)
+admin.site.register(gis_model.FootPathShapeModel,LeafletGeoAdmin)
