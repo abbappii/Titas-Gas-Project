@@ -147,7 +147,6 @@ footpath_mapping = {
 
 # # loc_shape = os.path.abspath('E:\Pranto\Storage\SHAPEFILE')
 # loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/SHAPEFILE/CL_RS/'))
-# loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/plotShape/riser/19_06_22/'))
 
 loc_shape = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Plot/'))
 loc_shape_road = os.path.abspath(os.path.join(os.path.dirname(__file__),'ShapeFile/NewPlotShape/Road/'))
@@ -187,5 +186,11 @@ def run_riser(verbose=True):
 loc_shape_val = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Valvepit/'))
 def run_val(verbose=True):
     lm = LayerMapping(gis_model.ValvePitShapeModel, loc_shape_val, valvepit_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
+
+loc_shape_riserS = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/plotShape/riser/19_06_22/'))
+def run_riserS(verbose=True):
+    lm = LayerMapping(gis_model.RiserShapeModel, loc_shape_riserS, raiser_mapping, transform=False,
                       encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
