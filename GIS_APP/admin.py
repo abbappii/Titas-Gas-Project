@@ -25,10 +25,10 @@ class GasLineShapeModel(admin.ModelAdmin):
 #     list_display = ('id', 'dia', 'pressure', 'no_of_burn', 'load_conne', 'pressure_o', 'mon_load', 'geom')
 
 
-@admin.register(gis_model.ValvePitShapeModel)
-class ValvePitShapeModel(admin.ModelAdmin):
-    list_display = ('id', 'depth', 'geom')
-
+# @admin.register(gis_model.ValvePitShapeModel)
+# class ValvePitShapeModel(admin.ModelAdmin):
+#     list_display = ('id', 'depth', 'geom')
+admin.site.register(gis_model.ValvePitShapeModel, LeafletGeoAdmin)
 
 @admin.register(gis_model.EndCapModel)
 class EndCapModel(admin.ModelAdmin):

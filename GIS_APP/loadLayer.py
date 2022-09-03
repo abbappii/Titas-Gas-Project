@@ -182,3 +182,10 @@ def run_riser(verbose=True):
     lm = LayerMapping(gis_model.RiserShapeModel, loc_shape_riser, raiser_mapping, transform=False,
                       encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
+
+
+loc_shape_val = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Valvepit/'))
+def run_val(verbose=True):
+    lm = LayerMapping(gis_model.ValvePitShapeModel, loc_shape_val, valvepit_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)
