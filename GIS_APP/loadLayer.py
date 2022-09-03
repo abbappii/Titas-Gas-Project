@@ -194,3 +194,10 @@ def run_riserS(verbose=True):
     lm = LayerMapping(gis_model.RiserShapeModel, loc_shape_riserS, raiser_mapping, transform=False,
                       encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
+
+
+loc_shape_endcap = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/EndCap/'))
+def run_endcap(verbose=True):
+    lm = LayerMapping(gis_model.EndCapModel, loc_shape_endcap, endcapmodel_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)

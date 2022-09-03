@@ -30,10 +30,11 @@ class GasLineShapeModel(admin.ModelAdmin):
 #     list_display = ('id', 'depth', 'geom')
 admin.site.register(gis_model.ValvePitShapeModel, LeafletGeoAdmin)
 
-@admin.register(gis_model.EndCapModel)
-class EndCapModel(admin.ModelAdmin):
-    list_display = ('id', 'geom')
+# @admin.register(gis_model.EndCapModel)
+# class EndCapModel(admin.ModelAdmin):
+#     list_display = ('id', 'geom')
 
+admin.site.register(gis_model.EndCapModel, LeafletGeoAdmin) 
 
 @admin.register(gis_model.ReducerModel)
 class ReducerModel(admin.ModelAdmin):
