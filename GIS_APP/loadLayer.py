@@ -176,3 +176,9 @@ def run_foot(verbose=True):
     lm = LayerMapping(gis_model.FootPathShapeModel, loc_shape_foot, footpath_mapping, transform=False,
                       encoding='iso-8859-1')
     lm.save(strict=True, verbose=verbose)
+
+loc_shape_riser = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ShapeFile/NewPlotShape/Riser/'))
+def run_riser(verbose=True):
+    lm = LayerMapping(gis_model.RiserShapeModel, loc_shape_riser, raiser_mapping, transform=False,
+                      encoding='iso-8859-1')
+    lm.save(strict=True, verbose=verbose)

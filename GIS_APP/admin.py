@@ -39,8 +39,8 @@ class EndCapModel(admin.ModelAdmin):
 class ReducerModel(admin.ModelAdmin):
     list_display = ('id', 'geom')
 
-class RiseShapeAdmin(LeafletGeoAdmin):
+class RiserShapeAdmin(LeafletGeoAdmin):
     pass
-admin.site.register(gis_model.RiserShapeModel,RiseShapeAdmin)
+admin.site.register(gis_model.RiserShapeModel,RiserShapeAdmin) 
 
 admin.site.register(gis_model.FootPathShapeModel,LeafletGeoAdmin)
