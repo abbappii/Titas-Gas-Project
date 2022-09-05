@@ -1,4 +1,4 @@
-from re import L
+
 from django.contrib import admin
 from GIS_APP import models as gis_model
 from leaflet.admin import LeafletGeoAdmin 
@@ -6,10 +6,6 @@ from leaflet.admin import LeafletGeoAdmin
 
 admin.site.register(gis_model.PlotShapeModel,LeafletGeoAdmin) 
 
-
-# @admin.register(gis_model.RoadShapeModel)
-# class RoadShapeModel(admin.ModelAdmin):
-#     list_display = ('id', 'road_no', 'geom')
 
 admin.site.register(gis_model.RoadShapeModel,LeafletGeoAdmin)
 # @admin.register(gis_model.GasLineShapeModel)
