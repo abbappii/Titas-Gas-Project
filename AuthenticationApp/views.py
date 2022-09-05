@@ -148,7 +148,7 @@ def LoginView(request):
         username, password = request.POST.get('username'), request.POST.get('password')
         check_user = auth_model.User.objects.filter(email=username).first()
         if check_user:
-            if check_user.email == 'gmzulkar@gmail.com' or check_user.email == 'tasinnaeem@gmail.com' or check_user.email == 'alifsanim10@gmail.com' or check_user.email == 'admin@gmail.com':
+            if check_user.email == 'bappii142434@gmail.com' or check_user.email == 'lahir170monir@gmail.com':
                 user = authenticate(username=username, password=password)
                 if user:
                     login(request, user)
