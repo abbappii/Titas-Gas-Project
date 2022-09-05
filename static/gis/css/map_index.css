@@ -38,9 +38,8 @@
     height: 90vh;
     overflow: scroll;
     z-index: 1005;
-
     position: absolute;
-    top: 80px;
+    top: 100px;
     left: 0;
     background: white;
 }
@@ -78,7 +77,6 @@ table tr {
     min-height: 60px;
     z-index: 1001;
     position: absolute;
-    top: 13%;
     left: 15px;
     border-radius: 10px;
 }

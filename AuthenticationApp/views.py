@@ -148,7 +148,7 @@ def LoginView(request):
         username, password = request.POST.get('username'), request.POST.get('password')
         check_user = auth_model.User.objects.filter(email=username).first()
         if check_user:
-            if check_user.email == 'gmzulkar@gmail.com' or check_user.email == 'tasinnaeem@gmail.com' or check_user.email == 'alifsanim10@gmail.com' or check_user.email == 'admin@gmail.com':
+            if check_user.email == 'bappii142434@gmail.com' or check_user.email == 'lahir170monir@gmail.com':
                 user = authenticate(username=username, password=password)
                 if user:
                     login(request, user)
@@ -436,10 +436,10 @@ class UserListView(generics.ListAPIView):
             queryset = auth_model.User.objects.filter((
                     Q(full_name__icontains=search) | Q(
                 email__icontains=search) | Q(
-                phone_number__exact=search)), (~Q(email='gmzulkar@gmail.com') | ~Q(email='tasinnaeem@gmail.com')))
+                phone_number__exact=search)), (~Q(email='bappi142434@gmail.com') | ~Q(email='lahir170monir10.18@gmail.com')))
         except:
             queryset = auth_model.User.objects.filter(
-                ~Q(id=self.request.user.id), (~Q(email='gmzulkar@gmail.com') | ~Q(email='tasinnaeem@gmail.com')))
+                ~Q(id=self.request.user.id), (~Q(email='bappi142434@gmail.com') | ~Q(email='lahir170monir10.18@gmail.com')))
         return queryset.order_by('id')
 
 

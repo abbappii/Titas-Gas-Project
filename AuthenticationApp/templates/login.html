@@ -73,9 +73,9 @@
         // toggle the type attribute
         const type = password.getAttribute("type") === "password" ? "text" : "password";
         password.setAttribute("type", type);
-        {#const eye = togglePassword.getAttribute('class') === "fa-solid fa-eye-slash"? "fa-solid fa-eye":"fa-solid fa-eye-slash";#}
-        {#togglePassword.removeAttribute('class');#}
-        {#togglePassword.setAttribute('class',eye);#}
+        {const eye = togglePassword.getAttribute('class') === "fa-solid fa-eye-slash"? "fa-solid fa-eye":"fa-solid fa-eye-slash";}
+        {togglePassword.removeAttribute('class');}
+        {togglePassword.setAttribute('class',eye);}
 
         // toggle the icon
         this.classList.toggle("fa-eye");
