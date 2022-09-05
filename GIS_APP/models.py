@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.contrib.gis.db import models
 
 
@@ -135,3 +136,18 @@ class EndCapModel(models.Model):
 
 class ReducerModel(models.Model):
     geom = models.MultiPointField(srid=32646)
+
+
+class CasingModel(models.Model):
+    dia = models.FloatField()
+    depth = models.FloatField(default=0)
+    len = models.FloatField(default=None)
+    geom = models.MultiPointField(srid=32646)
+
+    def __str__(self):
+        return f"Casing Model"
+
+    class Meta:
+        verbose_name_plural = "Casings"
+
+    
