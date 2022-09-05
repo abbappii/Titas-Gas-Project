@@ -244,10 +244,22 @@ AUTH_USER_MODEL = 'AuthenticationApp.User'
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.sendgrid.net'
+
+#sendgrid
+
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
+
+# check sendinblue 
+# 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
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = env('API_KEY')
+EMAIL_HOST_PASSWORD = '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'
+DEFAULT_FROM_EMAIL = 'shafiqwish@gmail.com'
+
 
 ENC_KEY = env('ENC_KEY')
 CORS_ORIGIN_ALLOW_ALL = True
