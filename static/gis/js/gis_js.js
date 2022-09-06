@@ -9,7 +9,7 @@ const map = new L.Map('map', {
     attributionControl: true
 });
 //=================Open street map view=================
-map.attributionControl.addAttribution('&copy; <a href="#">Project Research & Consultancy(PRC)</a>');
+map.attributionControl.addAttribution('&copy; <a href="#">Project Research & Consultancy(IIC)</a>');
 $('.leaflet-control-attribution a').first().css('display', 'none');
 $('.leaflet-control-attribution span').first().css('display', 'none');
 
