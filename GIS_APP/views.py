@@ -193,6 +193,6 @@ def CasingView(request):
     """
     Geo json response plot information
     """
-    dia = gis_model.CasingModel.objects.all()
-    data = serialize('geojson', dia)
+    qs = gis_model.CasingModel.objects.all()
+    data = serialize('geojson', qs)
     return HttpResponse(data, content_type='json')

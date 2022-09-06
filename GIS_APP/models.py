@@ -148,6 +148,6 @@ class CasingModel(models.Model):
         return f"Casing Model"
 
     class Meta:
-        verbose_name_plural = "Casings"
+        verbose_name_plural = "Casing Model"
 
     
