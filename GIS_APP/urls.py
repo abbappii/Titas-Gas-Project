@@ -14,6 +14,8 @@ urlpatterns = [
     path('api/footpath/', gis_view.FootpathApiView, name='footpath_api'),
     path('api/riser/', gis_view.RiserApiView, name='riser_info_api'),
     path('api/riser/<id>/', gis_view.RiserInformationView.as_view(), name='riser_information_api'),
+    path('api/casing/', gis_view.CasingView, name='casing_info_api'),
+
     # Gasline information
     path('api/pipe_line_info/', gis_view.GasLineInformationView.as_view(), name='pipe_line_info'),
     path('api/pipe_line_filter/', gis_view.GasLineFilterView.as_view(), name='pipe_line_filter'),
