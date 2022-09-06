@@ -178,3 +178,21 @@ class RiserInformationView(generics.ListAPIView):
         search = self.kwargs['id']
         queryset = gis_model.RiserShapeModel.objects.filter(id=search)
         return queryset
+
+
+# class CasingView(generics.ListAPIView):
+#     # permission_classes = [ permissions.IsAuthenticated]
+#     serializer_class = gis_ser.CasingSerializer
+#     def get_queryset(self):
+#         search = self.kwargs['id']
+#         queryset = gis_model.CasingModel.objects.filter(id=search)
+#         return queryset
+
+@login_required(login_url='auth_app:login')
+def CasingView(request):
+    """
+    Geo json response plot information
+    """
+    dia = gis_model.CasingModel.objects.all()
+    data = serialize('geojson', dia)
+    return HttpResponse(data, content_type='json')
