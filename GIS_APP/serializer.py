@@ -18,3 +18,8 @@ class RiserSerializer(serializers.ModelSerializer):
 #     data = super(GasPipelineSerializer, self).to_representation(instance)
 #     print('dddd' ,data.get('dia'))
 #     return data
+
+class CasingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = gis_model.CasingModel
+        fields = '__all__'
