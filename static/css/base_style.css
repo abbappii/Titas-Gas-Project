@@ -20,7 +20,7 @@
     }
 }
 
-.
+
 
 
 @media screen and (min-width: 481px) and (max-width: 990px) {
@@ -386,6 +386,7 @@ body.loaded {
     background: none!important;
     color: #0836a8 !important;
 }
+
 @-webkit-keyframes mover {
     0% {
         transform: translateY(0);
