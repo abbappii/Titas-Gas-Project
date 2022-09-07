@@ -750,29 +750,26 @@
   );
 
  
-
+// casing with icon show 
   let CasingInfo = new L.GeoJSON.AJAX(
     "{% url 'gis_app:casing_info_api' %}",
     {
       pointToLayer: function (gp, latlng) {
         // console.log(latlng)
-        var marker = L.marker(latlng, {icon:ReducerIcon});
+        var marker = L.marker(latlng, { icon: CasingIcon });
         return marker;
       },
-      onEachFeature: function (feature, layer) {
-        // console.log(feature)
-      },
-
+     
       onEachFeature: function (feature, layer) {
           colorProperty(feature, layer);
 
           layer.on('mouseover', function () {
             
-            //   this.setStyle({
-            //       color: 'crimson',
-            //       fillColor: 'yellow',
-            //       weight: '.5rem'
-            //   });
+              this.setStyle({
+                  color: 'crimson',
+                  fillColor: 'yellow',
+                  weight: '.5rem'
+              });
               HoverCasingFunction(feature)
 
           })
@@ -780,10 +777,6 @@
               casingPane.style.display = 'none';
               colorProperty(feature, layer);
           });
-        //   layer.on('click', function () {
-        //       pipeLineInfo(feature.properties.pk) //need to change
-        //   });
-
       }
 
 

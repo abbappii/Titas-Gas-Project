@@ -9,8 +9,8 @@ from rest_framework.response import Response
 from GIS_APP import models as gis_model, serializer as gis_ser
 
 
-# Create your views here.
-# @login_required(login_url='auth_app:login')
+# Create your views here./auth/login/?next=/
+@login_required(login_url='auth_app:login')
 def MapIndexView(request):
     return render(request, 'map_view.html', context={})
 
