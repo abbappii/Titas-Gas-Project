@@ -31,21 +31,3 @@ function showValvepitInformation(data) {
 
     tableBody.innerHTML = htmlData;
 }
-
-// function showGasLineData(data) {
-//     $('#gas_line_info').modal('toggle');
-//     let tableBody = document.getElementById('gas_table_body');
-//     let htmlData = '';
-//     for (let dia_info of data) {
-//         //console.log(dia_info)
-//         htmlData += `<tr>
-//                             <th scope="row">${dia_info.dia}</th>
-//                             <td>${dia_info.depth}</td>
-//                             <td>${dia_info.pressure}</td>
-//                             <td>${dia_info.len}</td>
-//                         </tr>`
-//     };
-
-//     tableBody.innerHTML = htmlData;
-// }
-
