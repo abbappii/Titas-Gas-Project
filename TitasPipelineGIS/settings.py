@@ -21,6 +21,7 @@ env = environ.Env(
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 environ.Env.read_env(os.path.join(BASE_DIR / 'TitasPipelineGIS', '.env'))
@@ -52,7 +53,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['172.16.30.21','localhost','*']
 
 # Application definition
 
@@ -113,80 +114,16 @@ WSGI_APPLICATION = 'TitasPipelineGIS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': env('DB_NAME'),
-#         'USER': env('DB_USER'),
-#         'PASSWORD': env('DB_PASSWORD'),
-#         'HOST': env('DB_HOST'),
-#         'PORT': '5432'
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'myproject',
-#         'USER': 'myprojectuser',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-
-# last one 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'mygeoproject',
-#         'USER': 'mygeoprojectuser',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'Geoproject',
-#         'USER': 'Geoprojectuser',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'titas_pipeline_v1',
-#         'USER': 'gis_auth',
-#         'PASSWORD': 'pranto@123',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
-
-
-# clean one 
+ 
+ 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mygproject',
-        'USER': 'mygprojectuser',
-        'PASSWORD': 'password',
+        'NAME': 'titas',
+        'USER': 'tdbuser',
+        'PASSWORD': 's1tewt33ks0ftfd',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
@@ -225,12 +162,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+STATIC_ROOT = BASE_DIR / 'static'
 
-STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+#STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR.joinpath("static"),
-]
+#STATICFILES_DIRS =[
+#	 os.path.join(BASE_DIR, 'static'),
+#]
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -243,6 +181,7 @@ AUTH_USER_MODEL = 'AuthenticationApp.User'
 
 # Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+<<<<<<< HEAD
 EMAIL_USE_TLS = True
 
 #sendgrid
@@ -259,6 +198,13 @@ EMAIL_HOST_PASSWORD = ''
 # EMAIL_HOST_PASSWORD = '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'
 # DEFAULT_FROM_EMAIL = 'shafiqwish@gmail.com'
 
+=======
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+>>>>>>> 4309ffcd00f9c855e6efa352044a8cdf185d8235
 
 ENC_KEY = env('ENC_KEY')
 CORS_ORIGIN_ALLOW_ALL = True
