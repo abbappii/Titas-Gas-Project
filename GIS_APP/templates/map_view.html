@@ -503,6 +503,47 @@
     >Gas</a
   >
 </div> -->
+
+<!-- valvepit show  -->
+
+<div
+  class="modal fade"
+  id="valvepit_info"
+  tabindex="-1"
+  aria-labelledby="valvepit_info"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div id="pipeline_info_pane">
+        <h2 class="text-center text-capitalize text-primary">
+          Valvepit Information
+        </h2>
+        <div id="riser_info_table">
+          <table class="table">
+            <thead id="valvepit_info_table_head">
+              <tr class="text-center">
+                <th scope="col">Id</th>
+                <th scope="col">depth</th>
+                <th scope="col">pressure</th>
+                <th scope="col">valve_type</th>
+                <th scope="col">valvepit_s</th>
+              </tr>
+            </thead>
+            <tbody id="valvepit_info_table_body" class="text-center">
+              <!--data will be loaded from js-->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- finish html  -->
+
+
 {% endblock %} {% block js_block %}
 
 <!--custome script-->
@@ -512,6 +553,8 @@
 <script src="{% static '/gis/js/pipelineInfo.js' %}"></script>
 <script src="{% static '/gis/js/riserInfo.js' %}"></script>
 <!-- <script src="{% static '/gis/js/casing.js' %}"></script> -->
+<script src="{% static '/gis/js/valvepit.js' %}"></script>
+
 
 {% csrf_token %}
 
@@ -744,7 +787,12 @@
         return marker;
       },
       onEachFeature: function (feature, layer) {
-        //console.log(feature)
+        //console.log(feature) valvepitLineInfo
+        layer.on("click",function(){
+          console.log(feature);
+          console.log('hiiiiiii');
+          valvepitLineInfo(feature)
+        })
       },
     }
   );
