@@ -9,6 +9,8 @@ urlpatterns = [
     path('api/road_shape/', gis_view.RoadShapeInfoApiView, name='road_shape_info_api'),
     path('api/gas_line_info/', gis_view.GasLineInfoApiView, name='gas_line_info_api'),
     path('api/valvepit_api/', gis_view.ValvePitApiView, name='valvepit_info_api'),
+    
+    path('api/valvepit_api/<id>/', gis_view.ValvepitInformationView.as_view(),name='valvepit_info'),
     path('api/end_cap/', gis_view.EndCapApiView, name='end_capinfo_api'),
     path('api/reducer_info/', gis_view.ReducerApiView, name='reducer_info_api'),
     path('api/footpath/', gis_view.FootpathApiView, name='footpath_api'),

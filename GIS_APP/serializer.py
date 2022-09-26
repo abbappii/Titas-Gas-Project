@@ -23,3 +23,9 @@ class CasingSerializer(serializers.ModelSerializer):
     class Meta:
         model = gis_model.CasingModel
         fields = '__all__'
+
+
+class ValvepitlineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = gis_model.ValvePitShapeModel
+        exclude = ['geom']
