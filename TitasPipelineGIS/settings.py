@@ -116,18 +116,27 @@ WSGI_APPLICATION = 'TitasPipelineGIS.wsgi.application'
 
  
  
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'titas',
+#         'USER': 'tdbuser',
+#         'PASSWORD': 's1tewt33ks0ftfd',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'titas',
-        'USER': 'tdbuser',
-        'PASSWORD': 's1tewt33ks0ftfd',
+        'NAME': 'mygproject',
+        'USER': 'mygprojectuser',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '',
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -162,13 +171,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATIC_ROOT = BASE_DIR / 'static'
+# STATIC_ROOT = BASE_DIR / 'static'
 
 #STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
 STATIC_URL = '/static/'
-#STATICFILES_DIRS =[
-#	 os.path.join(BASE_DIR, 'static'),
-#]
+STATICFILES_DIRS =[
+	 os.path.join(BASE_DIR, 'static'),
+]
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -197,11 +206,16 @@ EMAIL_HOST_PASSWORD = ''
 # EMAIL_HOST_PASSWORD = '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'
 # DEFAULT_FROM_EMAIL = 'shafiqwish@gmail.com'
 
-EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'lahir170monir10.18@gmail.com'
+EMAIL_HOST_PASSWORD = 'aaaaaa'
+# EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_PORT = env('EMAIL_PORT')
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 ENC_KEY = env('ENC_KEY')
 CORS_ORIGIN_ALLOW_ALL = True
