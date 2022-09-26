@@ -196,3 +196,14 @@ def CasingView(request):
     qs = gis_model.CasingModel.objects.all()
     data = serialize('geojson', qs)
     return HttpResponse(data, content_type='json')
+
+
+
+class ValvepitInformationView(generics.ListAPIView):
+    # permission_classes = [permissions.IsAuthenticated]
+    serializer_class = gis_ser.ValvepitlineSerializer
+
+    def get_queryset(self):
+        search = self.kwargs['id']
+        queryset = gis_model.ValvePitShapeModel.objects.filter(id=search)
+        return queryset
