@@ -840,7 +840,7 @@ let DrsInfo = new L.GeoJSON.AJAX(
     {
       pointToLayer: function (gp, latlng) {
         //console.log(latlng)
-        var marker = L.marker(latlng, { icon: RiserIcon });
+        var marker = L.marker(latlng, { icon: DrsIcon });
         return marker;
       },
       onEachFeature: function (feature, layer) {

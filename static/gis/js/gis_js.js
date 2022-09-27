@@ -106,7 +106,7 @@ var CasingIcon = L.icon({
 // drs icon create 
 var DrsIcon = L.icon({
 
-    iconUrl: '../../static/gis/img/drs.jpeg',
+    iconUrl: '../../static/gis/img/drs.png',
     // shadowUrl: '../static/img/conval.png',
 
     iconSize: [30, 30], // size of the icon
