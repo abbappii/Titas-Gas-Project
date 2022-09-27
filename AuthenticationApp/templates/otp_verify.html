@@ -7,7 +7,7 @@
 {% block body_block %}
     <div class="container-fluid login_container">
         <form method="POST">
-
+            {% csrf_token %}
 
             <h1>OTP VERIFICATION</h1>
             <p></p>
@@ -23,7 +23,6 @@
                 <i class="bx bxs-user-circle"></i>
             </div>
 
-            {% csrf_token %}
             <div>
                 <button type="submit">
                     Sign In

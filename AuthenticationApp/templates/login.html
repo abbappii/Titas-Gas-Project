@@ -23,7 +23,7 @@
 {% block body_block %}
     <div class="container-fluid login_container">
         <form method="POST">
-
+            {% csrf_token %}
             <img src="{% static '/auth/images/logo.png' %}" alt="" width="150px" height="150px"
                  style="border-radius: 50%">
             <h1>Titas Gas</h1>
@@ -47,7 +47,6 @@
 
 
             </div>
-            {% csrf_token %}
             <div>
                 <button type="submit">
                     Sign In
