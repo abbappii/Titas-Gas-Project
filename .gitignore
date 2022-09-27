@@ -140,7 +140,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
+.cpython-38.pyc
 # data/*.sqlite3
 # *.sqlite3
 .fuse_hidden0000014f00000006
