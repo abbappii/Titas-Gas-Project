@@ -31,6 +31,4 @@ admin.site.register(gis_model.FootPathShapeModel,LeafletGeoAdmin)
 admin.site.register(gis_model.CasingModel, LeafletGeoAdmin)
 
 # drs schema 
-@admin.register(gis_model.DRS)
-class DrsAdmin(admin.ModelAdmin):
-    list_display = ['id','name']
+admin.site.register(gis_model.DRS, LeafletGeoAdmin)

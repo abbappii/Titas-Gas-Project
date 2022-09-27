@@ -154,6 +154,7 @@ class CasingModel(models.Model):
 
 class DRS(models.Model):
     name = models.CharField(max_length=255)
+    geom = models.MultiPointField(srid=32646)
 
     def __str__(self):
         return self.name
