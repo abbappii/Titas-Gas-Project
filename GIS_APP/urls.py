@@ -22,4 +22,8 @@ urlpatterns = [
     path('api/pipe_line_info/', gis_view.GasLineInformationView.as_view(), name='pipe_line_info'),
     path('api/pipe_line_filter/', gis_view.GasLineFilterView.as_view(), name='pipe_line_filter'),
     path('api/pipe_line_info/<id>/', gis_view.LineInformationView.as_view(), name='pipe_line_info_filter'),
+
+    # drs info 
+    path('api/drs_api/',gis_view.DrshApiView, name='drs_info_api'),
+    path('api/drs_api/<id>/', gis_view.DrsInformationView.as_view(),name='drs_information'),
 ]
