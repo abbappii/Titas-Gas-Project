@@ -543,6 +543,41 @@
 
 <!-- finish html  -->
 
+<!-- drs info  -->
+
+<div
+  class="modal fade"
+  id="drs_info"
+  tabindex="-1"
+  aria-labelledby="drs_info"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div id="pipeline_info_pane">
+        <h2 class="text-center text-capitalize text-primary">
+          Drs Information
+        </h2>
+        <div id="riser_info_table">
+          <table class="table">
+            <thead id="drs_info_table_head">
+              <tr class="text-center">
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                
+              </tr>
+            </thead>
+            <tbody id="drs_info_table_body" class="text-center">
+              <!--data will be loaded from js-->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 {% endblock %} {% block js_block %}
 
@@ -553,6 +588,8 @@
 <script src="{% static '/gis/js/pipelineInfo.js' %}"></script>
 <script src="{% static '/gis/js/riserInfo.js' %}"></script>
 <script src="{% static '/gis/js/valvepit.js' %}"></script>
+<script src="{% static '/gis/js/drs.js' %}"></script>
+
 
 
 {% csrf_token %}
@@ -796,7 +833,27 @@
     }
   );
 
- 
+//  drs show on map 
+
+let DrsInfo = new L.GeoJSON.AJAX(
+    "{% url 'gis_app:drs_info_api' %}",
+    {
+      pointToLayer: function (gp, latlng) {
+        //console.log(latlng)
+        var marker = L.marker(latlng, { icon: RiserIcon });
+        return marker;
+      },
+      onEachFeature: function (feature, layer) {
+        //console.log(feature) valvepitLineInfo
+        layer.on("click",function(){
+          console.log(feature);
+          console.log('hiiiiiii');
+          drsInfo(feature)
+        })
+      },
+    }
+  );
+
 // casing with icon show 
   let CasingInfo = new L.GeoJSON.AJAX(
     "{% url 'gis_app:casing_info_api' %}",
@@ -1048,6 +1105,7 @@
     "End Cap": EndCapInfo,
     Reducer: ReducerInfo,
     Casing: CasingInfo,
+    Drs: DrsInfo,
   };
 
   L.control.layers(grouped, groupedOverlays).addTo(map);
