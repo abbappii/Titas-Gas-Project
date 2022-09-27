@@ -127,11 +127,23 @@ WSGI_APPLICATION = 'TitasPipelineGIS.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'mygproject',
+#         'USER': 'mygprojectuser',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
+# clean last edit 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mygproject',
-        'USER': 'mygprojectuser',
+        'NAME': 'mgproject',
+        'USER': 'mgprojectuser',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',

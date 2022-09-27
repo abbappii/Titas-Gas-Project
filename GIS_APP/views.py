@@ -207,3 +207,22 @@ class ValvepitInformationView(generics.ListAPIView):
         search = self.kwargs['id']
         queryset = gis_model.ValvePitShapeModel.objects.filter(id=search)
         return queryset
+
+# DRS logic 
+@login_required(login_url='auth_app:login')
+def DrshApiView(request):
+    """
+    Geo json response drs information
+    """
+    drs = gis_model.DRS.objects.all()
+    data = serialize('geojson', drs)
+    return HttpResponse(data, content_type='json')
+
+# single clickable 
+class DrsInformationView(generics.ListAPIView):
+    serializer_class = gis_ser.DrsSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        id = self.kwargs['id']
+        queryset = gis_model.DRS.objects.filter(id=id)
+        return queryset

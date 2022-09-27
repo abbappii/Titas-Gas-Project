@@ -29,3 +29,6 @@ admin.site.register(gis_model.RiserShapeModel,RiserShapeAdmin)
 admin.site.register(gis_model.FootPathShapeModel,LeafletGeoAdmin)
 
 admin.site.register(gis_model.CasingModel, LeafletGeoAdmin)
+
+# drs schema 
+admin.site.register(gis_model.DRS, LeafletGeoAdmin)

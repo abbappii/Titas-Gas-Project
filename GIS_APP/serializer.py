@@ -29,3 +29,9 @@ class ValvepitlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = gis_model.ValvePitShapeModel
         exclude = ['geom']
+
+
+class DrsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = gis_model.DRS
+        fields = '__all__'
