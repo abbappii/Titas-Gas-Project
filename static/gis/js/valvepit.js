@@ -1,7 +1,8 @@
 
-function valvepitLineInfo(id){
-    console.log("id is :",id.properties.pk);
-    fetch(`/api/valvepit_api/${id.properties.pk}/`)
+function valvepitLineInfo(feature){
+    var id = feature.properties.pk
+    // console.log("id is :",id.properties.pk);
+    fetch(`/api/valvepit_api/${id}/`)
 
         .then((response) => response.json())
         .then(data => 

@@ -206,11 +206,11 @@ EMAIL_HOST_PASSWORD = ''
 # EMAIL_HOST_PASSWORD = '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'
 # DEFAULT_FROM_EMAIL = 'shafiqwish@gmail.com'
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'lahir170monir10.18@gmail.com'
-EMAIL_HOST_PASSWORD = 'aaaaaa'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'lahir170monir10.18@gmail.com'
+# EMAIL_HOST_PASSWORD = 'aaaaaa'
 # EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 # EMAIL_HOST = env('EMAIL_HOST')
 # EMAIL_PORT = env('EMAIL_PORT')
