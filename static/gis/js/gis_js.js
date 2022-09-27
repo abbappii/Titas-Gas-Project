@@ -103,6 +103,18 @@ var CasingIcon = L.icon({
 });
 
 
+// drs icon create 
+var DrsIcon = L.icon({
+
+    iconUrl: '../../static/gis/img/drs.jpeg',
+    // shadowUrl: '../static/img/conval.png',
+
+    iconSize: [30, 30], // size of the icon
+    shadowSize: [1, 1], // size of the shadow
+    iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+});
 //marker while click and press ctrl + click
 var control = false;
 $(document).on('keyup keydown', function (e) {
