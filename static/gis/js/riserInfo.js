@@ -81,11 +81,11 @@ function showRiserData(data ,feature) {
                             <td>${data.burner_t_4}</td>
                             <td>${data.burner_n_3}</td>
                         </tr>`
-                        : ''}
-                        ${data.customer_8?
+                        : ''}s
+                        ${data.custome_10?
                         `<tr class="text-center">
                             <td>${temp++}</td>
-                            <td>${data.customer_8}</td>
+                            <td>${data.custome_10}</td>
                             <td>${data.custome_11}</td>
                             <td>${data.status_6}</td>
                             <td>${data.burner_t_5}</td>
@@ -122,7 +122,7 @@ function showRiserData(data ,feature) {
                             <td>${data.burner_n_7}</td>
                         </tr>`
                         : ''}
-                        ${data.custome_16?
+                        ${data.custome_18?
                         `<tr class="text-center">
                             <td>${temp++}</td>
                             <td>${data.custome_18}</td>
@@ -136,26 +136,8 @@ function showRiserData(data ,feature) {
                     </table>`
 
 
-    // for (let riser of data) {
-    //     htmlData += `<tr>
-    //                         <th scope="row">${riser.cus_id}</th>
-    //                         <td>${riser.dia}</td>
-    //                         <td>${riser.load_conne}</td>
-    //                         <td>${riser.no_of_burn}</td>
-    //                         <td>${riser.pressure}</td>
-    //                         <td>${riser.pressure_o}</td>
-    //                     </tr>`
-    // };
+ 
 
     tableContent.innerHTML = htmlData;
 }
 
-
-// cus_id: null
-// dia: 0
-// id: 1157
-// load_conne: 0
-// mon_load: 0
-// no_of_burn: 0
-// pressure: 0
-// pressure_o: 0
