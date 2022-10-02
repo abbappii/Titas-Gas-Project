@@ -102,16 +102,7 @@ function showRiserData(data ,feature) {
                             <td>${data.burner_n_5}</td>
                         </tr>`
                         : ''}
-                        ${data.custome_14?
-                        `<tr class="text-center">
-                            <td>${temp++}</td>
-                            <td>${data.custome_14}</td>
-                            <td>${data.custome_15}</td>
-                            <td>${data.status_8}</td>
-                            <td>${data.burner_t_7}</td>
-                            <td>${data.burner_n_6}</td>
-                        </tr>`
-                        : ''}
+                        
                         ${data.custome_16?
                         `<tr class="text-center">
                             <td>${temp++}</td>
