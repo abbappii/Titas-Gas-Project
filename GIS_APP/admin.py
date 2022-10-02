@@ -24,7 +24,14 @@ admin.site.register(gis_model.ReducerModel, LeafletGeoAdmin)
 
 class RiserShapeAdmin(LeafletGeoAdmin):
     pass
-admin.site.register(gis_model.RiserShapeModel,RiserShapeAdmin) 
+
+class RiserAdmin(LeafletGeoAdmin):
+    list_display = ['customerid']
+    search_fields = ['customerid']
+    list_filter = ['customerid']
+
+admin.site.register(gis_model.RiserShapeModel,RiserAdmin)
+
 
 admin.site.register(gis_model.FootPathShapeModel,LeafletGeoAdmin)
 
