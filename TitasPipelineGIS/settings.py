@@ -76,7 +76,7 @@ INSTALLED_APPS = [
     # cors
     'corsheaders',
     # installed app
-    'AuthenticationApp',
+    'AuthenticationApp.apps.AuthenticationappConfig',
     'GIS_APP',
 ]
 
@@ -208,7 +208,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = ''
+# EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = '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'
 
 # check sendinblue 
 # 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

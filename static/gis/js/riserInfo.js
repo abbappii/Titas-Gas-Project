@@ -12,6 +12,7 @@ function RiserInformation(feature) {
 
 
 function showRiserData(data ,feature) {
+    console.log('data:',data);
     let coOrdinates = feature.geometry.coordinates[0][1]+','+feature.geometry.coordinates[0][0]
     $('#riser_info').modal('toggle');
     let tableContent = document.getElementById('riser_info_table');
@@ -32,6 +33,7 @@ function showRiserData(data ,feature) {
                         </thead>
                         </thead>
                         <tbody class="text-center">
+                        
                         ${data.customerid?
                             `<tr class="text-center">
                             <td>${temp++}</td>
@@ -102,7 +104,16 @@ function showRiserData(data ,feature) {
                             <td>${data.burner_n_5}</td>
                         </tr>`
                         : ''}
-                        
+                        ${data.custome_14?
+                        `<tr class="text-center">
+                            <td>${temp++}</td>
+                            <td>${data.custome_14}</td>
+                            <td>${data.custome_15}</td>
+                            <td>${data.status_8}</td>
+                            <td>${data.burner_t_7}</td>
+                            <td>${data.burner_n_6}</td>
+                        </tr>`
+                        : ''}
                         ${data.custome_16?
                         `<tr class="text-center">
                             <td>${temp++}</td>

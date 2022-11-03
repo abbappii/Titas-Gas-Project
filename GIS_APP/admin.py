@@ -27,7 +27,7 @@ class RiserShapeAdmin(LeafletGeoAdmin):
 
 class RiserAdmin(LeafletGeoAdmin):
     list_display = ['customerid']
-    search_fields = ['customerid']
+    search_fields = ['customerid','id']
     list_filter = ['customerid']
 
 admin.site.register(gis_model.RiserShapeModel,RiserAdmin)
