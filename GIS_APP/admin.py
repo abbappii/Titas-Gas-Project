@@ -26,7 +26,7 @@ class RiserShapeAdmin(LeafletGeoAdmin):
     pass
 
 class RiserAdmin(LeafletGeoAdmin):
-    list_display = ['customerid']
+    list_display = ['id','customerid']
     search_fields = ['customerid','id']
     list_filter = ['customerid']
 
