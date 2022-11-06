@@ -8,9 +8,9 @@ from TitasPipelineGIS.email_send import Util
 def login_success(sender,request,user, **kwargs):
 
     print('user:',user)
-    email = 'bappi142434@gmail.com'
+    email = 'shafiqwish@gmail.com'
     subject = 'User Login Alert'
-    email_body = f"A user has been log in"
+    email_body = f"A user has been logged at TGTDCL WEBGIS."
 
     try:
         data = {'email_body': email_body, 'to_email': email,'email_subject':subject}

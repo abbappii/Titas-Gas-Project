@@ -14,13 +14,13 @@ function RiserInformation(feature) {
 function showRiserData(data, feature) {
 
 
-    console.log('data:', data);
+    
     let coOrdinates = feature.geometry.coordinates[0][1] + ',' + feature.geometry.coordinates[0][0]
     $('#riser_info').modal('toggle');
     let tableContent = document.getElementById('riser_info_table');
     let htmlData = '';
     data = data[0];
-
+    console.log('data_id:', data.id);
 
     const renderRiserInfo = () => {
         const loopable = new Array(40).fill(null)
@@ -44,9 +44,9 @@ function showRiserData(data, feature) {
 
 
     let temp = 1;
-    htmlData += `<p class="text-center py-3 px-4" > Coordinates: <a href="http://maps.google.com?q=${coOrdinates}" target="_blank">${coOrdinates}</a></p>
-                    <table class="table">
-                        <thead >
+    htmlData += `<p class="text-center py-3 px-4"> Coordinates: <a href="http://maps.google.com?q=${coOrdinates}" target="_blank">${coOrdinates}</a></p>
+                    <p class="text-center">Riser Number: ${data.id}</p><table class="table">
+                        <thead>
                             <tr class="text-center">
                                 <th scope="col">ID</th>
                                 <th scope="col">Customer Id</th>
